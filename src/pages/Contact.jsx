@@ -5,7 +5,7 @@ import './Contact.css';
 const Contact = () => {
   return (
     <div className="contact-page animate-fade-in">
-      <header className="page-header text-center">
+      <header className="page-header text-center" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/contact-bg.jpg') center/cover no-repeat" }}>
         <div className="container">
           <h1>Contact Us</h1>
           <p>We're here to help. Reach out to discuss how we can partner for your success.</p>

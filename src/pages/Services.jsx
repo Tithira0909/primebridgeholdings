@@ -21,7 +21,7 @@ const Services = () => {
   return (
     <div className="services-page animate-fade-in">
       {/* Page Header */}
-      <header className="page-header">
+      <header className="page-header" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/services-bg.jpg') center/cover no-repeat" }}>
         <div className="container text-center">
           <h1>Our Services</h1>
           <p>Comprehensive solutions designed to support every dimension of your business journey.</p>

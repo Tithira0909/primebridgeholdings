@@ -6,7 +6,7 @@ const About = () => {
   return (
     <div className="about-page animate-fade-in">
       {/* Page Header */}
-      <header className="page-header">
+      <header className="page-header" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/about-bg.jpg') center/cover no-repeat" }}>
         <div className="container text-center">
           <h1>About Us</h1>
           <p>Discover who we are, our vision, and the values that drive us.</p>

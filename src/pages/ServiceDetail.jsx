@@ -29,7 +29,7 @@ const ServiceDetail = () => {
 
   return (
     <div className="service-detail-page animate-fade-in">
-      <header className="page-header service-header">
+      <header className="page-header service-header" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/services-bg.jpg') center/cover no-repeat" }}>
         <div className="container">
           <Link to={`/services#${company.id}`} className="back-link">
             <ArrowLeft size={16} /> Back to {company.name}

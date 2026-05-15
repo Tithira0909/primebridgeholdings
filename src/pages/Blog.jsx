@@ -31,7 +31,7 @@ const Blog = () => {
 
   return (
     <div className="blog-page animate-fade-in">
-      <header className="page-header text-center">
+      <header className="page-header text-center" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/blog-bg.jpg') center/cover no-repeat" }}>
         <div className="container">
           <h1>Our Blog</h1>
           <p>Insights, news, and expert advice from the PrimeBridge team.</p>
