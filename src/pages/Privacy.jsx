@@ -2,12 +2,14 @@ import React from 'react';
 
 const Privacy = () => {
   return (
-    <div className="legal-page animate-fade-in" style={{ padding: '6rem 0' }}>
-      <div className="container" style={{ maxWidth: '800px', backgroundColor: 'var(--color-bg)', padding: '3rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
-        <h1 style={{ marginBottom: '2rem' }}>Privacy Policy</h1>
-        <p style={{ color: 'var(--color-text-light)', marginBottom: '2rem' }}>
-          Effective Date: May 1, 2024 | Last Updated: May 1, 2024
-        </p>
+    <div className="legal-page animate-fade-in">
+      <header className="page-header text-center" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/legal-bg.jpg') center/cover no-repeat", padding: '6rem 0 4rem', marginBottom: '3rem' }}>
+        <div className="container">
+          <h1>Privacy Policy</h1>
+          <p style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Effective Date: May 1, 2024 | Last Updated: May 1, 2024</p>
+        </div>
+      </header>
+      <div className="container" style={{ maxWidth: '800px', backgroundColor: 'var(--color-bg)', padding: '3rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', marginBottom: '3rem' }}>
 
         <p>
           PrimeBridge Holdings and its subsidiaries are committed to protecting your privacy. This Privacy Policy explains how we collect, use, store, and protect your personal information when you visit our website or engage with our services.
