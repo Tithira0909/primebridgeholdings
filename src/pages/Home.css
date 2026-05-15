@@ -3,7 +3,7 @@
   min-height: 90vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  background: linear-gradient(135deg, rgba(5, 15, 40, 0.7) 0%, rgba(0, 30, 80, 0.5) 100%), url('/images/hero-bg.jpg') center/cover no-repeat;
   color: var(--color-text-inverse);
   overflow: hidden;
 }

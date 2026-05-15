@@ -37,7 +37,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="container navbar-container">
         <Link to="/" className="navbar-logo" onClick={() => setIsOpen(false)}>
-          <span className="logo-text">PrimeBridge<span className="logo-accent">Holdings</span></span>
+          <img src="/images/prime.jpg" alt="PrimeBridge Holdings Logo" className="logo-image" />
         </Link>
 
         <div className="menu-icon" onClick={toggleMenu}>

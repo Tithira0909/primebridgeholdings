@@ -33,6 +33,12 @@
   color: var(--color-secondary);
 }
 
+.logo-image {
+  height: 60px;
+  width: auto;
+  display: block;
+}
+
 .menu-icon {
   display: none;
   cursor: pointer;
