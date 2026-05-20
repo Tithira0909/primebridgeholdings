@@ -2,13 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Briefcase, MonitorPlay, Users, CheckCircle } from 'lucide-react';
 import './Home.css';
-import { servicesData } from '../data';
+import { useServices } from '../context/ServicesContext';
+import { useHero } from '../context/HeroContext';
 
 const Home = () => {
+  const { servicesData } = useServices();
+  const { activeImageData } = useHero();
+
+  // If there's an active uploaded image, use it. Otherwise, fallback to the default CSS background (or inline it here).
+  const heroStyle = activeImageData ? {
+    backgroundImage: `linear-gradient(135deg, rgba(5, 15, 40, 0.7) 0%, rgba(0, 30, 80, 0.5) 100%), url(${activeImageData})`
+  } : {};
+
   return (
     <div className="home-page animate-fade-in">
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero" style={heroStyle}>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
           <h1 className="hero-title">Empowering Businesses for Sustainable Growth</h1>

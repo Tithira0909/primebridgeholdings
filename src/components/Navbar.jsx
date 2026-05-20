@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
-import { servicesData } from '../data';
+import { useServices } from '../context/ServicesContext';
 import './Navbar.css';
 
 const Navbar = () => {
+  const { servicesData } = useServices();
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
@@ -101,7 +102,7 @@ const Navbar = () => {
           ))}
           <li className="nav-item nav-btn-item">
             <Link to="/contact" className="btn btn-primary nav-btn" onClick={() => setIsOpen(false)}>
-              Get Started
+              Pay Here
             </Link>
           </li>
         </ul>

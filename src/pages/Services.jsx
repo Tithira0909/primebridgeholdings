@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { servicesData } from '../data';
 import { ArrowRight, Briefcase, MonitorPlay, Users } from 'lucide-react';
+import { useServices } from '../context/ServicesContext';
 import './Services.css';
 
 const Services = () => {
   const { hash } = useLocation();
+  const { servicesData } = useServices();
 
   useEffect(() => {
     if (hash) {

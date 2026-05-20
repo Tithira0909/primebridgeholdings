@@ -1,33 +1,9 @@
 import React from 'react';
 import { ArrowRight, User, Calendar } from 'lucide-react';
+import { useBlog } from '../context/BlogContext';
 
 const Blog = () => {
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'Navigating Corporate Tax Compliance in 2024',
-      excerpt: 'Stay ahead of the curve with our comprehensive guide to understanding the latest corporate tax regulations in Sri Lanka and how they impact your business.',
-      author: 'Finance Team',
-      date: 'May 10, 2024',
-      category: 'Finance'
-    },
-    {
-      id: 2,
-      title: 'The Importance of a Strong Digital Presence',
-      excerpt: 'In today’s digital age, having a robust online presence is no longer optional. Learn how our digital solutions can help your brand stand out.',
-      author: 'Digital Marketing Team',
-      date: 'April 28, 2024',
-      category: 'Technology'
-    },
-    {
-      id: 3,
-      title: 'Top Strategies for Retaining Top Talent',
-      excerpt: 'Employee retention is crucial for long-term success. Discover effective HR strategies to keep your best employees engaged and motivated.',
-      author: 'HR Experts',
-      date: 'April 15, 2024',
-      category: 'Human Resources'
-    }
-  ];
+  const { blogPosts } = useBlog();
 
   return (
     <div className="blog-page animate-fade-in">

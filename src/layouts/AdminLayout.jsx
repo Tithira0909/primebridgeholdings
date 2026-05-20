@@ -1,0 +1,49 @@
+import React from 'react';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { LogOut, LayoutDashboard, Globe } from 'lucide-react';
+import './AdminLayout.css';
+
+const AdminLayout = () => {
+  const { logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login');
+  };
+
+  return (
+    <div className="admin-layout">
+      {isAuthenticated && (
+        <aside className="admin-sidebar">
+          <div className="admin-sidebar-header">
+            <h2>Admin Portal</h2>
+          </div>
+          <nav className="admin-sidebar-nav">
+            <Link to="/admin/blog" className="admin-nav-link">
+              <LayoutDashboard size={20} /> Blog CMS
+            </Link>
+            <Link to="/admin/services" className="admin-nav-link">
+              <LayoutDashboard size={20} /> Services CMS
+            </Link>
+            <Link to="/admin/hero" className="admin-nav-link">
+              <LayoutDashboard size={20} /> Hero Media CMS
+            </Link>
+            <Link to="/" className="admin-nav-link">
+              <Globe size={20} /> View Site
+            </Link>
+            <button onClick={handleLogout} className="admin-nav-link logout-btn">
+              <LogOut size={20} /> Logout
+            </button>
+          </nav>
+        </aside>
+      )}
+      <main className="admin-main-content">
+        <Outlet />
+      </main>
+    </div>
+  );
+};
+
+export default AdminLayout;

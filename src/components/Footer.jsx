@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Share2, MessageCircle, Hash, Globe, Mail, Phone, MapPin } from 'lucide-react';
+import { useServices } from '../context/ServicesContext';
 import './Footer.css';
-import { servicesData } from '../data';
 
 const Footer = () => {
+  const { servicesData } = useServices();
   return (
     <footer className="footer">
       <div className="container">

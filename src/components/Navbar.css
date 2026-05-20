@@ -1,5 +1,5 @@
 .navbar {
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: #05182c;
   backdrop-filter: blur(10px);
   height: 80px;
   display: flex;
@@ -26,7 +26,7 @@
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
 }
 
 .logo-accent {
@@ -42,7 +42,7 @@
 .menu-icon {
   display: none;
   cursor: pointer;
-  color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
 }
 
 .nav-menu {
@@ -57,7 +57,7 @@
 }
 
 .nav-links {
-  color: var(--color-text);
+  color: var(--color-text-inverse);
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -151,14 +151,14 @@
     left: -100%;
     opacity: 0;
     transition: all 0.5s ease;
-    background-color: var(--color-bg);
+    background-color: #05182c;
     box-shadow: var(--shadow-md);
     padding: 2rem 0;
     align-items: flex-start;
   }
 
   .nav-menu.active {
-    background-color: rgba(255, 255, 255, 0.98);
+    background-color: #05182c;
     left: 0;
     opacity: 1;
     transition: all 0.5s ease;

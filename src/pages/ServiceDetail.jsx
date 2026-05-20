@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { servicesData } from '../data';
+import { useServices } from '../context/ServicesContext';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 import './Services.css';
 
 const ServiceDetail = () => {
   const { companyId, serviceId } = useParams();
   const navigate = useNavigate();
+  const { servicesData } = useServices();
   const [service, setService] = useState(null);
   const [company, setCompany] = useState(null);
 
@@ -23,7 +24,7 @@ const ServiceDetail = () => {
     } else {
       navigate('/services');
     }
-  }, [companyId, serviceId, navigate]);
+  }, [companyId, serviceId, navigate, servicesData]);
 
   if (!service || !company) return null;
 
