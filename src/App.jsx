@@ -32,6 +32,8 @@ import AdminBlog from './pages/admin/AdminBlog';
 import AdminServices from './pages/admin/AdminServices';
 import AdminHero from './pages/admin/AdminHero';
 
+import ScrollToTop from './components/ScrollToTop';
+
 // Scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();

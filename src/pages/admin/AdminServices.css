@@ -44,3 +44,253 @@
 .btn-icon.edit:hover {
   background-color: rgba(0, 180, 216, 0.1);
 }
+
+/* ── Pricing column in table ── */
+.pricing-type-badge {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.pricing-summary {
+  font-size: 0.82rem;
+  color: var(--color-text-light);
+}
+
+/* ── Wide modal for pricing editor ── */
+.modal-wide {
+  max-width: 780px !important;
+}
+
+/* ── Modal sections ── */
+.modal-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.modal-section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: 1.25rem;
+}
+
+/* ── Select ── */
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.1);
+}
+
+/* ── Pricing editor section ── */
+.pricing-editor-section {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Form rows ── */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* ── Editor list header ── */
+.editor-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.editor-list-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Add / Remove row buttons ── */
+.btn-add-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: rgba(0, 180, 216, 0.08);
+  border: 1px solid rgba(0, 180, 216, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.btn-add-row:hover {
+  background: rgba(0, 180, 216, 0.15);
+}
+
+.btn-remove-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  background: rgba(255, 107, 107, 0.06);
+  color: #ff6b6b;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+  margin-top: 0.5rem;
+}
+
+.btn-remove-row:hover {
+  background: rgba(255, 107, 107, 0.15);
+}
+
+.btn-remove-row.inline {
+  margin-top: 0;
+}
+
+/* ── Editor rows (categories, tiers, addons) ── */
+.editor-row {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.editor-row .btn-remove-row {
+  align-self: flex-end;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  margin-top: 0;
+}
+
+/* ── Accordion (packages, recruitment) ── */
+.editor-accordion {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-bg-alt);
+  user-select: none;
+  transition: background var(--transition-fast);
+}
+
+.accordion-header:hover {
+  background: rgba(0, 180, 216, 0.05);
+}
+
+.accordion-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accordion-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Feature row (inside package editor) ── */
+.feature-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feature-row input {
+  flex: 1;
+}
+
+/* ── Checkbox label ── */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* ── Optional label tag ── */
+.label-optional {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  font-weight: 400;
+}
+
+/* ── Responsive ── */
+@media screen and (max-width: 768px) {
+  .form-row-2,
+  .form-row-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-wide {
+    max-width: 100% !important;
+  }
+}
