@@ -28,7 +28,7 @@ const Footer = () => {
             <ul className="footer-links">
               {servicesData.map((company, idx) => (
                 <li key={idx}>
-                  <Link to={`/services#${company.id}`}>{company.name}</Link>
+                  <Link to={company.id === 'holdings' ? '/holdings' : `/services#${company.id}`}>{company.name}</Link>
                 </li>
               ))}
             </ul>

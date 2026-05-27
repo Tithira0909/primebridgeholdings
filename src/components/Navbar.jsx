@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { useServices } from '../context/ServicesContext';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const { servicesData } = useServices();
+  const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
@@ -92,7 +94,7 @@ const Navbar = () => {
                         onMouseLeave={handleSubDropdownLeave}
                       >
                         <Link
-                          to={`/services#${company.id}`}
+                          to={company.id === 'holdings' ? '/holdings' : `/services#${company.id}`}
                           className={`dropdown-link ${company.services.length > 0 ? 'has-sub-dropdown' : ''}`}
                           onClick={() => setIsOpen(false)}
                         >
@@ -131,6 +133,17 @@ const Navbar = () => {
                 Pay Here
               </button>
             </li>
+            {isAuthenticated && (
+              <li className="nav-item nav-btn-item">
+                <Link
+                  to="/admin/dashboard"
+                  className="btn btn-secondary nav-btn"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Admin Panel
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

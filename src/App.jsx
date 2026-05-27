@@ -22,15 +22,19 @@ import About from './pages/About';
 import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
 import Blog from './pages/Blog';
+import BlogDetail from './pages/BlogDetail';
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import Holdings from './pages/Holdings';
+
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminBlog from './pages/admin/AdminBlog';
 import AdminServices from './pages/admin/AdminServices';
 import AdminHero from './pages/admin/AdminHero';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -82,9 +86,11 @@ function App() {
                     <Route path="/services" element={<Services />} />
                     <Route path="/services/:companyId/:serviceId" element={<ServiceDetail />} />
                     <Route path="/blog" element={<Blog />} />
+                    <Route path="/blog/:id" element={<BlogDetail />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/holdings" element={<Holdings />} />
                   </Route>
 
                   {/* Admin Routes with distinct Layout */}
@@ -97,6 +103,8 @@ function App() {
                       </ProtectedRoute>
                     }
                   >
+                    <Route index element={<AdminDashboard />} />
+                    <Route path="dashboard" element={<AdminDashboard />} />
                     <Route path="blog" element={<AdminBlog />} />
                     <Route path="services" element={<AdminServices />} />
                     <Route path="hero" element={<AdminHero />} />

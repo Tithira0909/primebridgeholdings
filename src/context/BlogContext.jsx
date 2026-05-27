@@ -56,8 +56,12 @@ export const BlogProvider = ({ children }) => {
     setBlogPosts(blogPosts.filter(post => post.id !== id));
   };
 
+  const getPostById = (id) => {
+    return blogPosts.find(post => post.id.toString() === id.toString());
+  };
+
   return (
-    <BlogContext.Provider value={{ blogPosts, addPost, deletePost }}>
+    <BlogContext.Provider value={{ blogPosts, addPost, deletePost, getPostById }}>
       {children}
     </BlogContext.Provider>
   );

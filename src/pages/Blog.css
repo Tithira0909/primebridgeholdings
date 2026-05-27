@@ -1,0 +1,7 @@
+.blog-card:hover .blog-card-img-hover {
+  transform: scale(1.06);
+}
+
+.blog-card:hover .blog-title-hover {
+  color: var(--color-primary-light);
+}

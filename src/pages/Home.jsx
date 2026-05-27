@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Briefcase, MonitorPlay, Users, CheckCircle } from 'lucide-react';
+import { ArrowRight, Briefcase, MonitorPlay, Users, CheckCircle, Building2 } from 'lucide-react';
 import './Home.css';
 import { useServices } from '../context/ServicesContext';
 import { useHero } from '../context/HeroContext';
@@ -38,7 +38,7 @@ const Home = () => {
             <div className="about-text">
               <h2>Building Long-Term Partnerships</h2>
               <p>
-                PrimeBridge Holdings (Pvt) Ltd is a dynamic business solutions group headquartered in Sri Lanka. 
+                PrimeBridge Holdings is a dynamic business solutions group headquartered in Sri Lanka. 
                 Through our specialized subsidiaries, we provide end-to-end solutions tailored to startups, SMEs, and growing enterprises.
               </p>
               <ul className="feature-list">
@@ -73,7 +73,8 @@ const Home = () => {
           <div className="grid grid-3">
             {servicesData.map((company, index) => {
               const Icon = company.id === 'corporate-services' ? Briefcase : 
-                           company.id === 'solutions' ? MonitorPlay : Users;
+                           company.id === 'solutions' ? MonitorPlay : 
+                           company.id === 'holdings' ? Building2 : Users;
               
               return (
                 <div className="card company-card" key={index}>
@@ -82,8 +83,8 @@ const Home = () => {
                   </div>
                   <h3>{company.name}</h3>
                   <p>{company.description}</p>
-                  <Link to={`/services#${company.id}`} className="link-with-icon">
-                    View Services <ArrowRight size={16} />
+                  <Link to={company.id === 'holdings' ? '/holdings' : `/services#${company.id}`} className="link-with-icon">
+                    {company.id === 'holdings' ? 'Explore Group' : 'View Services'} <ArrowRight size={16} />
                   </Link>
                 </div>
               );

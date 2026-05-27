@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, LayoutDashboard, Globe } from 'lucide-react';
+import { LogOut, LayoutDashboard, Globe, FileText, Briefcase, Image } from 'lucide-react';
 import './AdminLayout.css';
 
 const AdminLayout = () => {
@@ -21,14 +21,17 @@ const AdminLayout = () => {
             <h2>Admin Portal</h2>
           </div>
           <nav className="admin-sidebar-nav">
+            <Link to="/admin/dashboard" className="admin-nav-link">
+              <LayoutDashboard size={20} /> Dashboard Home
+            </Link>
             <Link to="/admin/blog" className="admin-nav-link">
-              <LayoutDashboard size={20} /> Blog CMS
+              <FileText size={20} /> Blog CMS
             </Link>
             <Link to="/admin/services" className="admin-nav-link">
-              <LayoutDashboard size={20} /> Services CMS
+              <Briefcase size={20} /> Services CMS
             </Link>
             <Link to="/admin/hero" className="admin-nav-link">
-              <LayoutDashboard size={20} /> Hero Media CMS
+              <Image size={20} /> Hero Media CMS
             </Link>
             <Link to="/" className="admin-nav-link">
               <Globe size={20} /> View Site
@@ -39,7 +42,7 @@ const AdminLayout = () => {
           </nav>
         </aside>
       )}
-      <main className="admin-main-content">
+      <main className="admin-main-content" data-lenis-prevent>
         <Outlet />
       </main>
     </div>

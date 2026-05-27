@@ -55,6 +55,16 @@
   animation: spin-reverse 1.5s linear infinite;
 }
 
+.loader-logo-image {
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+  opacity: 0.18;
+  border-radius: 50%;
+  z-index: 1;
+}
+
 .loader-text {
   font-family: var(--font-heading);
   font-size: 1.2rem;

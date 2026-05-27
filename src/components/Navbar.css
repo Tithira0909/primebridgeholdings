@@ -10,7 +10,7 @@
   width: 100%;
   z-index: 999;
   box-shadow: var(--shadow-sm);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: none;
   transition: all var(--transition-normal);
 }
 
@@ -61,11 +61,11 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
   height: 100%;
   font-weight: 500;
   transition: color var(--transition-fast);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
 }
 
 .nav-links:hover, .active-link {
