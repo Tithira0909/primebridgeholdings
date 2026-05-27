@@ -5,9 +5,7 @@ const ServicesContext = createContext();
 
 export const useServices = () => useContext(ServicesContext);
 
-// Bump this version string whenever data.js structure changes.
-// The context will automatically discard any stale localStorage data.
-const DATA_VERSION = '2.1.0';
+const DATA_VERSION = '2.3.0';
 const STORAGE_KEY = 'primebridge_services_data';
 const VERSION_KEY = 'primebridge_services_version';
 

@@ -4,9 +4,19 @@ import { useServices } from '../context/ServicesContext';
 import { ArrowLeft, CheckCircle, MessageCircle, Info } from 'lucide-react';
 import './Services.css';
 
+// ─── Doodle imports ───────────────────────────────────────────────────────────
+import corporateDoodle from '../assets/corporate-doodle.jpeg';
+import solutionsDoodle from '../assets/solutions-doodle.jpeg';
+import talentDoodle    from '../assets/talent-doodle.jpeg';
+
+const DOODLE_MAP = {
+  'corporate-services': corporateDoodle,
+  'solutions':          solutionsDoodle,
+  'talent-management':  talentDoodle,
+};
+
 // ─── Pricing Block Components ────────────────────────────────────────────────
 
-/** "Starting from LKR X" — simple single price */
 const StartingFromBlock = ({ service }) => (
   <div className="pricing-block pricing-starting">
     <p className="pricing-label">Starting From</p>
@@ -22,7 +32,6 @@ const StartingFromBlock = ({ service }) => (
   </div>
 );
 
-/** Two-tier advisory pricing (retainer vs scenario) */
 const TieredBlock = ({ service }) => (
   <div className="pricing-block pricing-tiered">
     <p className="pricing-label">Pricing Options</p>
@@ -41,7 +50,6 @@ const TieredBlock = ({ service }) => (
   </div>
 );
 
-/** Individual vs Corporate tax categories */
 const CategoriesBlock = ({ service }) => (
   <div className="pricing-block pricing-categories">
     <p className="pricing-label">Pricing by Category</p>
@@ -59,7 +67,6 @@ const CategoriesBlock = ({ service }) => (
   </div>
 );
 
-/** Social media 3-package cards + add-ons */
 const PackagesBlock = ({ service }) => (
   <div className="pricing-block pricing-packages">
     <p className="pricing-label">Choose a Package</p>
@@ -104,7 +111,6 @@ const PackagesBlock = ({ service }) => (
   </div>
 );
 
-/** 4-tier recruitment table */
 const RecruitmentTiersBlock = ({ service }) => (
   <div className="pricing-block pricing-recruitment">
     <p className="pricing-label">Fee Structure — Per Successfully Placed Candidate</p>
@@ -126,8 +132,6 @@ const RecruitmentTiersBlock = ({ service }) => (
         </div>
       ))}
     </div>
-
-    {/* Legal notes */}
     <div className="recruitment-notes">
       {service.paymentNote && (
         <div className="rec-note-row">
@@ -151,7 +155,6 @@ const RecruitmentTiersBlock = ({ service }) => (
   </div>
 );
 
-/** DM / contact for quote */
 const DMBlock = ({ service }) => (
   <div className="pricing-block pricing-dm">
     <MessageCircle size={28} className="dm-icon" />
@@ -174,15 +177,10 @@ const PricingSection = ({ service }) => {
   }
 };
 
-// ─── What's Included Block ────────────────────────────────────────────────────
+// ─── What's Included ─────────────────────────────────────────────────────────
 
-/**
- * Only rendered when the service has an `included` array.
- * dm-type services without included data show nothing here.
- */
 const IncludedBlock = ({ service }) => {
   if (!service.included || service.included.length === 0) return null;
-
   return (
     <div className="service-features card">
       <h3>What's Included</h3>
@@ -224,12 +222,12 @@ const ServiceDetail = () => {
 
   if (!service || !company) return null;
 
-  // Wide layout for packages/recruitment, standard 2-col for everything else
   const isWideLayout =
     service.pricingType === 'packages' ||
     service.pricingType === 'recruitment-tiers';
 
   const hasIncluded = service.included && service.included.length > 0;
+  const doodle = DOODLE_MAP[companyId];
 
   return (
     <div className="service-detail-page animate-fade-in">
@@ -248,10 +246,18 @@ const ServiceDetail = () => {
         </div>
       </header>
 
-      <section className="section">
-        <div className="container">
+      {/* ── Content section with doodle background ── */}
+      <section className="section service-detail-section">
+        {doodle && (
+          <div
+            className="service-doodle-bg"
+            style={{ backgroundImage: `url(${doodle})` }}
+            aria-hidden="true"
+          />
+        )}
+
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           {isWideLayout ? (
-            /* ── Wide single-column layout for package/tier-heavy services ── */
             <div className="service-detail-wide">
               <p className="service-lead">{service.desc}</p>
               <PricingSection service={service} />
@@ -278,8 +284,7 @@ const ServiceDetail = () => {
               )}
             </div>
           ) : (
-            /* ── Standard 2-column layout ── */
-            <div className={`service-detail-content ${!hasIncluded ? 'grid grid-2' : 'grid grid-2'}`}>
+            <div className="grid grid-2 service-detail-content">
               <div className="service-text">
                 <h2>About This Service</h2>
                 <p className="service-lead">{service.desc}</p>

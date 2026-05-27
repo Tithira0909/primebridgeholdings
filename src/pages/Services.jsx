@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight, Briefcase, MonitorPlay, Users } from 'lucide-react';
+import { ArrowRight, Briefcase, MonitorPlay, Users, Building2 } from 'lucide-react';
 import { useServices } from '../context/ServicesContext';
 import './Services.css';
 
@@ -8,7 +8,6 @@ import './Services.css';
 const getPriceBadge = (service) => {
   switch (service.pricingType) {
     case 'starting': {
-      // Clean up period text: "per month" → "month", "per annum" → "annum"
       const period = service.pricingNote
         ? service.pricingNote.replace(/^per\s+/i, '')
         : null;
@@ -44,6 +43,13 @@ const getPriceBadge = (service) => {
   }
 };
 
+const iconMap = {
+  'holdings': Building2,
+  'corporate-services': Briefcase,
+  'solutions': MonitorPlay,
+  'talent-management': Users,
+};
+
 const Services = () => {
   const { hash } = useLocation();
   const { servicesData } = useServices();
@@ -58,6 +64,9 @@ const Services = () => {
       }
     }
   }, [hash]);
+
+  // Filter out companies with no services (e.g. Holdings) — nothing to render in the grid
+  const visibleCompanies = servicesData.filter(company => company.services.length > 0);
 
   return (
     <div className="services-page animate-fade-in">
@@ -76,20 +85,15 @@ const Services = () => {
       </header>
 
       <div className="container" style={{ padding: '4rem 2rem' }}>
-        {servicesData.map((company, index) => {
-          const Icon =
-            company.id === 'corporate-services'
-              ? Briefcase
-              : company.id === 'solutions'
-              ? MonitorPlay
-              : Users;
+        {visibleCompanies.map((company, index) => {
+          const Icon = iconMap[company.id] || Briefcase;
 
           return (
             <section
               id={company.id}
               key={company.id}
               className={`company-section ${
-                index !== servicesData.length - 1 ? 'has-divider' : ''
+                index !== visibleCompanies.length - 1 ? 'has-divider' : ''
               }`}
             >
               <div className="company-header">
@@ -113,7 +117,6 @@ const Services = () => {
                     >
                       <h4>{service.name}</h4>
                       <p>{service.desc}</p>
-                      {/* Spacer pushes badge + learn-more to card bottom */}
                       <div className="service-card-spacer" />
                       <span className={`service-price-badge${badge.isQuote ? ' service-price-badge--quote' : ''}`}>
                         {badge.text}

@@ -1,5 +1,13 @@
 export const servicesData = [
   {
+    id: "holdings",
+    name: "PrimeBridge Holdings",
+    description:
+      "The parent company and strategic umbrella of the PrimeBridge Group of Companies. Overseeing corporate governance, group strategy, and inter-company alignment across all divisions.",
+    icon: "Building2",
+    services: [],
+  },
+  {
     id: "corporate-services",
     name: "PrimeBridge Corporate Services",
     description: "A professional financial and corporate advisory arm delivering comprehensive business support services. Ensures full financial compliance and operational efficiency for businesses.",
@@ -101,8 +109,55 @@ export const servicesData = [
         id: "company-registration",
         name: "Company Registration",
         desc: "Complete company registration process with the Registrar of Companies.",
-        pricingType: "dm",
-        dmText: "Pricing depends on company type and requirements.",
+        pricingType: "packages",
+        packages: [
+          {
+            name: "Basic",
+            price: "LKR 15,000",
+            period: "one-time",
+            highlight: false,
+            features: [
+              "Private limited company registration",
+              "Name reservation & approval",
+              "Submission to Registrar of Companies",
+              "Certificate of incorporation",
+            ],
+          },
+          {
+            name: "Standard",
+            price: "LKR 25,000",
+            period: "one-time",
+            highlight: true,
+            badge: "Most Popular",
+            features: [
+              "Everything in Basic",
+              "Article of association drafting",
+              "Share structure setup",
+              "Director & shareholder registration",
+              "Registered office address setup",
+            ],
+          },
+          {
+            name: "Premium",
+            price: "LKR 40,000",
+            period: "one-time",
+            highlight: false,
+            features: [
+              "Everything in Standard",
+              "Tax registration (IRD)",
+              "Opening bank account guidance",
+              "Company secretary appointment",
+              "Post-incorporation compliance checklist",
+            ],
+          },
+        ],
+        included: [
+          "End-to-end registration handling",
+          "Document preparation & submission",
+          "Liaison with Registrar of Companies",
+          "Certificate of incorporation",
+          "Dedicated point of contact throughout",
+        ],
       },
       {
         id: "company-secretarial",
