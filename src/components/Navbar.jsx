@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { useServices } from '../context/ServicesContext';
@@ -12,18 +12,84 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
   const [showPayPopup, setShowPayPopup] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 960);
   const location = useLocation();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  // Track screen size to toggle click vs hover behaviors
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 960;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setIsOpen(false);
+        setActiveDropdown(null);
+        setActiveSubDropdown(null);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const handleDropdownEnter = (menu) => setActiveDropdown(menu);
-  const handleDropdownLeave = () => {
+  // Close menus on route change
+  useEffect(() => {
+    setIsOpen(false);
     setActiveDropdown(null);
     setActiveSubDropdown(null);
+  }, [location.pathname]);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    // Reset dropdowns when closing hamburger
+    if (isOpen) {
+      setActiveDropdown(null);
+      setActiveSubDropdown(null);
+    }
   };
 
-  const handleSubDropdownEnter = (submenu) => setActiveSubDropdown(submenu);
-  const handleSubDropdownLeave = () => setActiveSubDropdown(null);
+  // Desktop Hover Handlers
+  const handleDropdownEnter = (menu) => {
+    if (!isMobile) {
+      setActiveDropdown(menu);
+    }
+  };
+
+  const handleDropdownLeave = () => {
+    if (!isMobile) {
+      setActiveDropdown(null);
+      setActiveSubDropdown(null);
+    }
+  };
+
+  const handleSubDropdownEnter = (submenu) => {
+    if (!isMobile) {
+      setActiveSubDropdown(submenu);
+    }
+  };
+
+  const handleSubDropdownLeave = () => {
+    if (!isMobile) {
+      setActiveSubDropdown(null);
+    }
+  };
+
+  // Mobile Click / Toggle Handlers
+  const handleNavClick = (link, e) => {
+    if (isMobile && link.hasDropdown) {
+      e.preventDefault();
+      setActiveDropdown(activeDropdown === 'services' ? null : 'services');
+    } else {
+      setIsOpen(false);
+    }
+  };
+
+  const handleCompanyClick = (company, e) => {
+    if (isMobile && company.services.length > 0) {
+      e.preventDefault();
+      setActiveSubDropdown(activeSubDropdown === company.id ? null : company.id);
+    } else {
+      setIsOpen(false);
+    }
+  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -63,7 +129,7 @@ const Navbar = () => {
             <img src="/images/prime.jpg" alt="PrimeBridge Holdings Logo" className="logo-image" />
           </Link>
 
-          <div className="menu-icon" onClick={toggleMenu}>
+          <div className="menu-icon" onClick={toggleMenu} aria-label="Toggle menu">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </div>
 
@@ -78,32 +144,66 @@ const Navbar = () => {
                 <Link
                   to={link.path}
                   className={`nav-links ${location.pathname === link.path ? 'active-link' : ''}`}
-                  onClick={() => !link.hasDropdown && setIsOpen(false)}
+                  onClick={(e) => handleNavClick(link, e)}
                 >
                   {link.name}
-                  {link.hasDropdown && <ChevronDown size={16} className="dropdown-icon" />}
+                  {link.hasDropdown && (
+                    <ChevronDown 
+                      size={16} 
+                      className={`dropdown-icon ${activeDropdown === 'services' ? 'rotated' : ''}`} 
+                    />
+                  )}
                 </Link>
 
                 {link.hasDropdown && activeDropdown === 'services' && (
                   <div className="dropdown-menu animate-fade-in">
+                    {/* Mobile-only General Overview link */}
+                    {isMobile && (
+                      <div className="dropdown-item-wrapper">
+                        <Link
+                          to="/services"
+                          className="dropdown-link overview-link"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          All Services Overview
+                        </Link>
+                      </div>
+                    )}
+
                     {servicesData.map((company, cIndex) => (
                       <div
                         key={cIndex}
                         className="dropdown-item-wrapper"
-                        onMouseEnter={() => company.services.length > 0 && handleSubDropdownEnter(company.id)}
-                        onMouseLeave={handleSubDropdownLeave}
+                        onMouseEnter={() => !isMobile && company.services.length > 0 && handleSubDropdownEnter(company.id)}
+                        onMouseLeave={!isMobile ? handleSubDropdownLeave : undefined}
                       >
                         <Link
                           to={company.id === 'holdings' ? '/holdings' : `/services#${company.id}`}
-                          className={`dropdown-link ${company.services.length > 0 ? 'has-sub-dropdown' : ''}`}
-                          onClick={() => setIsOpen(false)}
+                          className={`dropdown-link ${company.services.length > 0 ? 'has-sub-dropdown' : ''} ${activeSubDropdown === company.id ? 'active-sub' : ''}`}
+                          onClick={(e) => handleCompanyClick(company, e)}
                         >
                           {company.name}
-                          {company.services.length > 0 && <ChevronRight size={16} />}
+                          {company.services.length > 0 && (
+                            <ChevronRight 
+                              size={16} 
+                              className={`sub-dropdown-icon ${activeSubDropdown === company.id ? 'rotated' : ''}`} 
+                            />
+                          )}
                         </Link>
 
                         {activeSubDropdown === company.id && company.services.length > 0 && (
                           <div className="sub-dropdown-menu animate-fade-in">
+                            {/* Mobile-only Company Anchor Link */}
+                            {isMobile && (
+                              <Link
+                                to={`/services#${company.id}`}
+                                className="sub-dropdown-link overview-link"
+                                onClick={() => setIsOpen(false)}
+                              >
+                                {company.name.split(' (')[0]} Overview
+                              </Link>
+                            )}
+
                             {company.services.map((service, sIndex) => (
                               <Link
                                 key={sIndex}

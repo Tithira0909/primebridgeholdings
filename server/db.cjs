@@ -1,9 +1,43 @@
-const sqlite3 = require('sqlite3').verbose();
+const mysql = require('mysql2');
 const path = require('path');
-const fs = require('fs');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
-const dbPath = path.resolve(__dirname, 'database.sqlite');
-const db = new sqlite3.Database(dbPath);
+const dbConfig = {
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '3306', 10),
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+};
+
+let pool = null;
+
+// 1. First, create database if not exists
+const connection = mysql.createConnection(dbConfig);
+connection.on('error', (err) => {
+  console.error('Database connection error:', err.message);
+});
+connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME || 'primebridge'}\``, (err) => {
+  if (err) {
+    console.error('Failed to auto-create database:', err.message);
+  } else {
+    console.log(`Database '${process.env.DB_NAME || 'primebridge'}' verified/created successfully.`);
+    // 2. Initialize the main connection pool AFTER the database exists
+    initializePool();
+    // 3. Initialize schema and seed data sequentially
+    initializeDatabase();
+  }
+  connection.end();
+});
+
+function initializePool() {
+  pool = mysql.createPool({
+    ...dbConfig,
+    database: process.env.DB_NAME || 'primebridge',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+  });
+}
 
 const defaultBlocks1 = [
   {
@@ -152,75 +186,172 @@ const initialPosts = [
   }
 ];
 
-db.serialize(() => {
-  // 1. Admins Table
+// 3. Compatibility layer mimicking SQLite API
+const db = {
+  get: (query, params, callback) => {
+    if (!pool) return callback(new Error("Database pool is not initialized yet"));
+    pool.query(query, params, (err, results) => {
+      if (err) return callback(err);
+      callback(null, results && results.length > 0 ? results[0] : null);
+    });
+  },
+  
+  all: (query, params, callback) => {
+    if (!pool) return callback(new Error("Database pool is not initialized yet"));
+    pool.query(query, params, (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    });
+  },
+  
+  run: (query, params, callback) => {
+    if (!pool) {
+      if (callback) return callback(new Error("Database pool is not initialized yet"));
+      return;
+    }
+    
+    // Translate SQLite dialects to MySQL
+    let mysqlQuery = query;
+    if (mysqlQuery.includes('id INTEGER PRIMARY KEY AUTOINCREMENT')) {
+      mysqlQuery = mysqlQuery.replace('id INTEGER PRIMARY KEY AUTOINCREMENT', 'id INT AUTO_INCREMENT PRIMARY KEY');
+    }
+    
+    // SQLite's CREATE TABLE IF NOT EXISTS with primary key adjustments
+    if (mysqlQuery.includes('username TEXT PRIMARY KEY')) {
+      mysqlQuery = mysqlQuery.replace('username TEXT PRIMARY KEY', 'username VARCHAR(255) PRIMARY KEY');
+    }
+    if (mysqlQuery.includes('platform TEXT PRIMARY KEY')) {
+      mysqlQuery = mysqlQuery.replace('platform TEXT PRIMARY KEY', 'platform VARCHAR(255) PRIMARY KEY');
+    }
+    if (mysqlQuery.includes('password TEXT NOT NULL')) {
+      mysqlQuery = mysqlQuery.replace('password TEXT NOT NULL', 'password VARCHAR(255) NOT NULL');
+    }
+    if (mysqlQuery.includes('url TEXT NOT NULL')) {
+      mysqlQuery = mysqlQuery.replace('url TEXT NOT NULL', 'url VARCHAR(255) NOT NULL');
+    }
+    if (mysqlQuery.includes('title TEXT NOT NULL')) {
+      // For blogs fields
+      mysqlQuery = mysqlQuery.replace(/TEXT/g, 'VARCHAR(255)');
+      mysqlQuery = mysqlQuery.replace('excerpt VARCHAR(255)', 'excerpt TEXT');
+      mysqlQuery = mysqlQuery.replace('content VARCHAR(255)', 'content LONGTEXT');
+      mysqlQuery = mysqlQuery.replace('image VARCHAR(255)', 'image LONGTEXT');
+    }
+    
+    pool.query(mysqlQuery, params, function(err, results) {
+      if (err) {
+        if (callback) return callback(err);
+        return console.error('Database migration run query error:', err.message);
+      }
+      
+      const context = {
+        lastID: results ? results.insertId : null,
+        changes: results ? results.affectedRows : 0
+      };
+      
+      if (callback) {
+        callback.call(context, null);
+      }
+    });
+  },
+  
+  prepare: (query) => {
+    // SQLite INSERT OR REPLACE to MySQL REPLACE INTO
+    const mysqlQuery = query.replace('INSERT OR REPLACE', 'REPLACE');
+    return {
+      run: (platform, url) => {
+        if (!pool) return console.error("Database pool is not initialized yet");
+        pool.query(mysqlQuery, [platform, url || ''], (err) => {
+          if (err) console.error('Prepared statement run error:', err.message);
+        });
+      },
+      finalize: () => {
+        // No-op for compatibility
+      }
+    };
+  },
+  
+  serialize: (callback) => {
+    // Mocked serialization just executes immediately
+    callback();
+  }
+};
+
+function initializeDatabase() {
+  console.log("Initializing database tables...");
+  // 1. Create admins table
   db.run(`
     CREATE TABLE IF NOT EXISTS admins (
       username TEXT PRIMARY KEY,
       password TEXT NOT NULL
     )
-  `);
-
-  // Seed default admin if not exists
-  db.get("SELECT * FROM admins WHERE username = 'admin'", (err, row) => {
-    if (!row) {
-      db.run("INSERT INTO admins (username, password) VALUES ('admin', 'admin123')");
-    }
-  });
-
-  // 2. Socials Table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS socials (
-      platform TEXT PRIMARY KEY,
-      url TEXT NOT NULL
-    )
-  `);
-
-  // Seed default socials and corporate settings
-  const defaultSocials = [
-    { platform: 'facebook', url: 'https://facebook.com/primebridge' },
-    { platform: 'instagram', url: 'https://instagram.com/primebridge' },
-    { platform: 'linkedin', url: 'https://linkedin.com/company/primebridge' },
-    { platform: 'address', url: '123 Business Avenue, Colombo 03, Sri Lanka' },
-    { platform: 'phone', url: '+94 11 234 5678' },
-    { platform: 'email', url: 'info@primebridgegroup.com' }
-  ];
-
-  defaultSocials.forEach(s => {
-    db.get("SELECT * FROM socials WHERE platform = ?", [s.platform], (err, row) => {
+  `, [], (err) => {
+    if (err) return console.error('Error creating admins table:', err.message);
+    
+    // Seed default admin if not exists
+    db.get("SELECT * FROM admins WHERE username = 'admin'", [], (err, row) => {
       if (!row) {
-        db.run("INSERT INTO socials (platform, url) VALUES (?, ?)", [s.platform, s.url]);
+        db.run("INSERT INTO admins (username, password) VALUES ('admin', 'admin123')");
       }
     });
-  });
 
-  // 3. Blogs Table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS blogs (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      excerpt TEXT,
-      content TEXT,
-      author TEXT,
-      category TEXT,
-      image TEXT,
-      date TEXT
-    )
-  `);
+    // 2. Create socials table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS socials (
+        platform TEXT PRIMARY KEY,
+        url TEXT NOT NULL
+      )
+    `, [], (err) => {
+      if (err) return console.error('Error creating socials table:', err.message);
 
-  // Seed default blogs if table is empty
-  db.get("SELECT count(*) as count FROM blogs", (err, row) => {
-    if (row && row.count === 0) {
-      const stmt = db.prepare(`
-        INSERT INTO blogs (title, excerpt, content, author, category, image, date)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `);
-      initialPosts.forEach(post => {
-        stmt.run(post.title, post.excerpt, post.content, post.author, post.category, post.image, post.date);
+      // Seed socials
+      const defaultSocials = [
+        { platform: 'facebook', url: 'https://facebook.com/primebridge' },
+        { platform: 'instagram', url: 'https://instagram.com/primebridge' },
+        { platform: 'linkedin', url: 'https://linkedin.com/company/primebridge' },
+        { platform: 'address', url: '123 Business Avenue, Colombo 03, Sri Lanka' },
+        { platform: 'phone', url: '+94 11 234 5678' },
+        { platform: 'email', url: 'info@primebridgegroup.com' }
+      ];
+
+      defaultSocials.forEach(s => {
+        db.get("SELECT * FROM socials WHERE platform = ?", [s.platform], (err, row) => {
+          if (!row) {
+            db.run("INSERT INTO socials (platform, url) VALUES (?, ?)", [s.platform, s.url]);
+          }
+        });
       });
-      stmt.finalize();
-    }
+
+      // 3. Create blogs table
+      db.run(`
+        CREATE TABLE IF NOT EXISTS blogs (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT NOT NULL,
+          excerpt TEXT,
+          content TEXT,
+          author TEXT,
+          category TEXT,
+          image TEXT,
+          date TEXT
+        )
+      `, [], (err) => {
+        if (err) return console.error('Error creating blogs table:', err.message);
+
+        // Seed blogs
+        db.get("SELECT count(*) as count FROM blogs", [], (err, row) => {
+          const count = row ? (row.count || row['count']) : 0;
+          if (count === 0) {
+            console.log("Seeding initial default blog articles...");
+            initialPosts.forEach(post => {
+              db.run(`
+                INSERT INTO blogs (title, excerpt, content, author, category, image, date)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+              `, [post.title, post.excerpt, post.content, post.author, post.category, post.image, post.date]);
+            });
+          }
+        });
+      });
+    });
   });
-});
+}
 
 module.exports = db;
