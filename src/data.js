@@ -1,7 +1,7 @@
 export const servicesData = [
   {
     id: "holdings",
-    name: "PrimeBridge Holdings",
+    name: "PrimeBridge Holdings (Pvt) Ltd",
     description:
       "The parent company and strategic umbrella of the PrimeBridge Group of Companies. Overseeing corporate governance, group strategy, and inter-company alignment across all divisions.",
     icon: "Building2",
@@ -9,7 +9,7 @@ export const servicesData = [
   },
   {
     id: "corporate-services",
-    name: "PrimeBridge Corporate Services",
+    name: "PrimeBridge Corporate Services (Pvt) Ltd",
     description: "A professional financial and corporate advisory arm delivering comprehensive business support services. Ensures full financial compliance and operational efficiency for businesses.",
     icon: "Briefcase",
     services: [
@@ -30,7 +30,7 @@ export const servicesData = [
       },
       {
         id: "financial-advisory",
-        name: "Financial Management & Advisory",
+        name: "Financial & Business Advisory",
         desc: "Financial planning, cash flow management, and investment appraisals.",
         pricingType: "tiered",
         pricingTiers: [
@@ -55,13 +55,6 @@ export const servicesData = [
           "Business performance review",
           "Strategic financial recommendations",
         ],
-      },
-      {
-        id: "business-consulting",
-        name: "Business & Financial Consulting",
-        desc: "Navigate challenges and capitalise on opportunities.",
-        pricingType: "dm",
-        dmText: "Pricing varies based on scope and complexity.",
       },
       {
         id: "corporate-tax",
@@ -170,7 +163,7 @@ export const servicesData = [
   },
   {
     id: "solutions",
-    name: "PrimeBridge Solutions",
+    name: "PrimeBridge Solutions (Pvt) Ltd",
     description:
       "A technology and digital services company helping businesses establish and grow their digital presence. Empowers businesses with modern digital tools and strategies.",
     icon: "MonitorPlay",
@@ -303,7 +296,7 @@ export const servicesData = [
   },
   {
     id: "talent-management",
-    name: "PrimeBridge Talent Management",
+    name: "PrimeBridge Talent Management (Pvt) Ltd",
     description:
       "A human resource solutions provider focused on building and managing high-performing teams. Delivers efficient and scalable workforce solutions.",
     icon: "Users",

@@ -147,3 +147,51 @@
   .visual-card-2 { top: 40%; right: 0; }
   .visual-card-3 { bottom: 0; left: 10%; }
 }
+
+/* ── CEO Section ── */
+.ceo-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ceo-avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-border);
+  flex-shrink: 0;
+  border: 2px dashed var(--color-border);
+}
+
+.ceo-coming-soon {
+  color: var(--color-text-light);
+  font-style: italic;
+  margin: 0;
+}
+
+/* ── Clients Section ── */
+
+.clients-logos-placeholder {
+  background: var(--color-bg-alt);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  text-align: center;
+}
+
+.clients-coming-soon {
+  color: var(--color-text-light);
+  font-style: italic;
+  margin: 0;
+}

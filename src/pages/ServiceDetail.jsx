@@ -242,7 +242,19 @@ const ServiceDetail = () => {
           <Link to={`/services#${company.id}`} className="back-link">
             <ArrowLeft size={16} /> Back to {company.name}
           </Link>
-          <h1>{service.name}</h1>
+          <div className="service-header-title-row">
+            <div className="service-company-logo-wrap">
+              <img
+                src="/images/prime.jpg"
+                alt={`${company.name} logo`}
+                className="service-company-logo"
+              />
+            </div>
+            <div>
+              <p className="service-company-label">{company.name}</p>
+              <h1>{service.name}</h1>
+            </div>
+          </div>
         </div>
       </header>
 

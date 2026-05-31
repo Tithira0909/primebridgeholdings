@@ -23,9 +23,9 @@ const AdminLogin = () => {
       <div className="admin-login-card">
         <h2>Admin Login</h2>
         <p>Enter the master password to access the CMS.</p>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit} className="admin-login-form">
           <div className="form-group">
             <label htmlFor="password">Password</label>

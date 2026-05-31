@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, Briefcase, Image } from 'lucide-react';
+import { FileText, Briefcase, Image, CreditCard } from 'lucide-react';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -32,6 +32,12 @@ const AdminDashboard = () => {
           <div className="card-icon"><Image size={32} /></div>
           <h3>Hero Media CMS</h3>
           <p>Manage home page sliding images and brand presentation media.</p>
+        </Link>
+
+        <Link to="/admin/transactions" className="dashboard-menu-card">
+            <div className="card-icon"><CreditCard size={32} /></div>
+            <h3>Transactions</h3>
+            <p>View payment history, revenue summary, and transaction statuses.</p>
         </Link>
       </div>
     </div>

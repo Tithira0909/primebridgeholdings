@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const storedAuth = localStorage.getItem('isAdmin');
+    const storedAuth = sessionStorage.getItem('isAdmin');
     if (storedAuth === 'true') {
       setIsAuthenticated(true);
     }
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     // Mock authentication: simple password check
     if (password === 'admin123') {
       setIsAuthenticated(true);
-      localStorage.setItem('isAdmin', 'true');
+      sessionStorage.setItem('isAdmin', 'true');
       return true;
     }
     return false;
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('isAdmin');
   };
 
   return (

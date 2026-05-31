@@ -5,7 +5,7 @@ const ServicesContext = createContext();
 
 export const useServices = () => useContext(ServicesContext);
 
-const DATA_VERSION = '2.3.0';
+const DATA_VERSION = '2.4.0';
 const STORAGE_KEY = 'primebridge_services_data';
 const VERSION_KEY = 'primebridge_services_version';
 

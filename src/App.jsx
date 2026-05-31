@@ -35,6 +35,8 @@ import AdminBlog from './pages/admin/AdminBlog';
 import AdminServices from './pages/admin/AdminServices';
 import AdminHero from './pages/admin/AdminHero';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminTransactions from './pages/admin/AdminTransactions';
+
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -108,6 +110,7 @@ function App() {
                     <Route path="blog" element={<AdminBlog />} />
                     <Route path="services" element={<AdminServices />} />
                     <Route path="hero" element={<AdminHero />} />
+                    <Route path="transactions" element={<AdminTransactions />} />
                   </Route>
                 </Routes>
               </Router>

@@ -9,14 +9,14 @@ const Home = () => {
   const { servicesData } = useServices();
   const { activeImageData } = useHero();
 
-  // If there's an active uploaded image, use it. Otherwise, fallback to the default CSS background (or inline it here).
   const heroStyle = activeImageData ? {
     backgroundImage: `linear-gradient(135deg, rgba(5, 15, 40, 0.7) 0%, rgba(0, 30, 80, 0.5) 100%), url(${activeImageData})`
   } : {};
 
   return (
     <div className="home-page animate-fade-in">
-      {/* Hero Section */}
+
+      {/* ── Hero ── */}
       <section className="hero" style={heroStyle}>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
@@ -31,15 +31,17 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About Overview */}
+      {/* ── About Overview ── */}
       <section className="section about-overview">
         <div className="container">
           <div className="grid grid-2" style={{ alignItems: 'center' }}>
             <div className="about-text">
               <h2>Building Long-Term Partnerships</h2>
               <p>
-                PrimeBridge Holdings is a dynamic business solutions group headquartered in Sri Lanka. 
-                Through our specialized subsidiaries, we provide end-to-end solutions tailored to startups, SMEs, and growing enterprises.
+                Primebridge Group is a dynamic business solutions group based in Colombo, Sri Lanka.
+                Through our specialized subsidiaries, we provide end-to-end solutions tailored to
+                startups, SMEs, and growing enterprises — combining financial expertise, digital
+                innovation, and human capital management under one trusted group.
               </p>
               <ul className="feature-list">
                 <li><CheckCircle size={20} className="feature-icon" /> Technical Expertise</li>
@@ -47,7 +49,7 @@ const Home = () => {
                 <li><CheckCircle size={20} className="feature-icon" /> Client-First Mindset</li>
               </ul>
               <Link to="/about" className="link-with-icon mt-2">
-                Discover our Vision & Mission <ArrowRight size={16} />
+                Discover our Vision &amp; Mission <ArrowRight size={16} />
               </Link>
             </div>
             <div className="about-image-placeholder">
@@ -60,30 +62,44 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Companies Overview */}
+      {/* ── Companies Overview ── */}
       <section className="section section-bg-alt companies-section">
         <div className="container">
           <div className="text-center mb-4">
             <h2>Our Specialized Subsidiaries</h2>
             <p style={{ maxWidth: '700px', margin: '0 auto' }}>
-              We provide the building blocks that power sustainable growth through our three expert domains.
+              We provide the building blocks that power sustainable growth through our expert domains.
             </p>
           </div>
-          
+
           <div className="grid grid-3">
             {servicesData.map((company, index) => {
-              const Icon = company.id === 'corporate-services' ? Briefcase : 
-                           company.id === 'solutions' ? MonitorPlay : 
-                           company.id === 'holdings' ? Building2 : Users;
-              
+              const Icon = company.id === 'corporate-services' ? Briefcase :
+                           company.id === 'solutions'          ? MonitorPlay :
+                           company.id === 'holdings'           ? Building2 : Users;
+
               return (
                 <div className="card company-card" key={index}>
                   <div className="company-icon-wrapper">
-                    <Icon size={32} />
+                    <img
+                      src="/images/prime.jpg"
+                      alt={`${company.name} logo`}
+                      className="company-logo-img"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="company-icon-fallback" style={{ display: 'none' }}>
+                      <Icon size={32} />
+                    </div>
                   </div>
                   <h3>{company.name}</h3>
                   <p>{company.description}</p>
-                  <Link to={company.id === 'holdings' ? '/holdings' : `/services#${company.id}`} className="link-with-icon">
+                  <Link
+                    to={company.id === 'holdings' ? '/holdings' : `/services#${company.id}`}
+                    className="link-with-icon"
+                  >
                     {company.id === 'holdings' ? 'Explore Group' : 'View Services'} <ArrowRight size={16} />
                   </Link>
                 </div>
@@ -93,16 +109,18 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ── CTA Section ── */}
       <section className="section cta-section">
         <div className="container text-center">
           <h2 style={{ color: 'white' }}>Ready to Scale Your Business?</h2>
           <p style={{ color: 'rgba(255,255,255,0.9)', maxWidth: '600px', margin: '0 auto 2rem' }}>
-            Whether you are a startup finding your footing, or an established enterprise seeking specialised expertise, we have the right solution for you.
+            Whether you are a startup finding your footing, or an established enterprise seeking
+            specialised expertise, we have the right solution for you.
           </p>
           <Link to="/contact" className="btn btn-secondary">Get in Touch Today</Link>
         </div>
       </section>
+
     </div>
   );
 };

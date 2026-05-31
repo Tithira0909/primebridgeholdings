@@ -365,3 +365,210 @@
 .popup-btn {
   min-width: 140px;
 }
+
+/* ── Pay Here Modal ── */
+.pay-modal-box {
+  position: relative;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: popup-in 0.25s ease;
+}
+
+.pay-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.75rem 1.75rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pay-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.pay-modal-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pay-modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0 0 0.2rem;
+}
+
+.pay-modal-subtitle {
+  font-size: 0.82rem;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+/* Form */
+.pay-form {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pay-form-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: -0.25rem;
+}
+
+.pay-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.pay-field label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.pay-field input {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--color-text);
+  background: var(--color-bg-alt);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pay-field input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.1);
+  background: var(--color-bg);
+}
+
+.pay-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.pay-optional {
+  font-weight: 400;
+  color: var(--color-text-light);
+  font-size: 0.75rem;
+}
+
+.pay-secure-note {
+  font-size: 0.78rem;
+  color: var(--color-text-light);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+.pay-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.pay-submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Loading state */
+.pay-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  gap: 1rem;
+  text-align: center;
+}
+
+.pay-loading-state p {
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.pay-loading-state span {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
+.pay-spinner {
+  animation: spin 1s linear infinite;
+  color: var(--color-primary);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Error state */
+.pay-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.pay-error-msg {
+  color: #ff6b6b;
+  font-size: 0.92rem;
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Mobile pay form */
+@media screen and (max-width: 600px) {
+  .pay-field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pay-modal-box {
+    max-width: 100%;
+    margin: 0 1rem;
+  }
+}
