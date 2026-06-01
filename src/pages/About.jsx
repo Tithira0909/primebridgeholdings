@@ -7,7 +7,12 @@ const About = () => {
     <div className="about-page animate-fade-in">
 
       {/* ── Page Header ── */}
-      <header className="page-header" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/about-bg.jpg') center/cover no-repeat" }}>
+      <header
+        className="page-header"
+        style={{
+          background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/about-bg.jpg') center/cover no-repeat"
+        }}
+      >
         <div className="container text-center">
           <h1>About Us</h1>
           <p>Discover who we are, our vision, and the values that drive us.</p>
@@ -17,7 +22,7 @@ const About = () => {
       {/* ── Who We Are ── */}
       <section className="section">
         <div className="container">
-          <div className="grid grid-2 about-content-grid">
+          <div className="about-who-grid">
             <div className="about-text-content">
               <h2>Who We Are</h2>
               <p>
@@ -36,18 +41,21 @@ const About = () => {
                 integrity, professionalism, and a genuine commitment to our clients' success.
               </p>
             </div>
-            <div className="about-visual">
-              <div className="visual-card visual-card-1">
-                <Target size={40} className="visual-icon" />
+            <div className="about-highlights">
+              <div className="highlight-card">
+                <Target size={36} className="highlight-icon" />
                 <h4>Integrated Services</h4>
+                <p>End-to-end solutions across finance, technology, and human capital.</p>
               </div>
-              <div className="visual-card visual-card-2">
-                <Users size={40} className="visual-icon" />
+              <div className="highlight-card">
+                <Users size={36} className="highlight-icon" />
                 <h4>Expert Teams</h4>
+                <p>Qualified professionals with deep domain expertise.</p>
               </div>
-              <div className="visual-card visual-card-3">
-                <Award size={40} className="visual-icon" />
+              <div className="highlight-card">
+                <Award size={36} className="highlight-icon" />
                 <h4>Proven Success</h4>
+                <p>A track record of delivering measurable results for our clients.</p>
               </div>
             </div>
           </div>
@@ -123,19 +131,46 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── CEO / Founder — Placeholder ── */}
+      {/* ── CEO & Founder ── */}
       <section className="section section-bg-alt ceo-section">
         <div className="container">
           <div className="text-center mb-4">
             <h2>Our CEO &amp; Founder</h2>
             <p>The vision and leadership behind Primebridge Group.</p>
           </div>
-          <div className="ceo-placeholder">
-            <div className="ceo-avatar-placeholder">
-              <Users size={48} />
+          <div className="ceo-card">
+            <div className="ceo-avatar">
+              <span className="ceo-initials">SF</span>
             </div>
-            <div className="ceo-info-placeholder">
-              <p className="ceo-coming-soon">CEO profile coming soon.</p>
+            <div className="ceo-content">
+              <h3 className="ceo-name">Shaun Fernando</h3>
+              <p className="ceo-title">CEO &amp; Founder, Primebridge Group of Companies</p>
+              <p className="ceo-bio">
+                Shaun Fernando is the CEO and Founder of Primebridge Group of Companies, a diversified
+                group operating under its parent entity, Primebridge Holdings (Private) Limited, with
+                subsidiaries spanning Primebridge Corporate Services, Primebridge Solutions, and
+                Primebridge Talent Management.
+              </p>
+              <p className="ceo-bio">
+                With over 8 years of experience spanning both local and international markets, including
+                extensive exposure to the US market across diverse industries, Shaun brings a broad and
+                strategic perspective to every facet of the business. His leadership is grounded in a strong 
+                academic and professional foundation, holding dual professional qualifications as
+                a CIMA and ACCA member, a Bachelor of Business Administration in Management from IIC
+                University of Technology, Cambodia, and a Master of Business Administration from the
+                University of the West of England.
+              </p>
+              <p className="ceo-bio">
+                Under his direction, Primebridge Group of Companies continues to grow as a
+                multidisciplinary organisation committed to delivering excellence in corporate services,
+                business solutions, and talent management.
+              </p>
+              <div className="ceo-credentials">
+                <span className="ceo-credential-badge">CIMA</span>
+                <span className="ceo-credential-badge">ACCA</span>
+                <span className="ceo-credential-badge">BBA — IIC University</span>
+                <span className="ceo-credential-badge">MBA — UWE</span>
+              </div>
             </div>
           </div>
         </div>
