@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, LayoutDashboard, Globe, FileText, Briefcase, Image, CreditCard } from 'lucide-react';
+import { LogOut, LayoutDashboard, Globe, FileText, Briefcase, Image, CreditCard, Settings } from 'lucide-react';
 import './AdminLayout.css';
 
 const AdminLayout = () => {
@@ -35,6 +35,9 @@ const AdminLayout = () => {
             </Link>
             <Link to="/admin/transactions" className="admin-nav-link">
               <CreditCard size={20} /> Transactions
+            </Link>
+            <Link to="/admin/settings" className="admin-nav-link">
+              <Settings size={20} /> Site Settings
             </Link>
             <Link to="/" className="admin-nav-link">
               <Globe size={20} /> View Site

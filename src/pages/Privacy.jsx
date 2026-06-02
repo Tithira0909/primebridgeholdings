@@ -6,7 +6,7 @@ const Privacy = () => {
       <header className="page-header text-center" style={{ background: "linear-gradient(135deg, rgba(5, 15, 40, 0.8) 0%, rgba(0, 30, 80, 0.7) 100%), url('/images/legal-bg.jpg') center/cover no-repeat", padding: '6rem 0 4rem', marginBottom: '3rem' }}>
         <div className="container">
           <h1>Privacy Policy</h1>
-          <p style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Effective Date: May 1, 2024 | Last Updated: May 1, 2024</p>
+          <p style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Effective Date: May 1, 2026 | Last Updated: May 1, 2026</p>
         </div>
       </header>
       <div className="container" style={{ maxWidth: '800px', backgroundColor: 'var(--color-bg)', padding: '3rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', marginBottom: '3rem' }}>

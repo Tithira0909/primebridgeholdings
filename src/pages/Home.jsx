@@ -82,7 +82,7 @@ const Home = () => {
                 <div className="card company-card" key={index}>
                   <div className="company-icon-wrapper">
                     <img
-                      src="/images/prime.jpg"
+                      src={company.logo || "/images/prime.jpg"}
                       alt={`${company.name} logo`}
                       className="company-logo-img"
                       onError={(e) => {

@@ -85,8 +85,8 @@ const Holdings = () => {
           
           <div className="grid grid-3">
             <div className="card sub-card">
-              <div className="sub-icon-wrapper blue">
-                <Building2 size={28} />
+              <div className="sub-icon-wrapper blue" style={{ overflow: 'hidden', padding: 0, border: 'none' }}>
+                <img src="/images/Corporate.jpg" alt="PrimeBridge Corporate Services logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <h3>PrimeBridge Corporate Services</h3>
               <p>Financial accounting, tax advisory, business registration, and secretarial compliance services for SMEs and enterprises.</p>
@@ -96,8 +96,8 @@ const Holdings = () => {
             </div>
 
             <div className="card sub-card">
-              <div className="sub-icon-wrapper cyan">
-                <Building2 size={28} />
+              <div className="sub-icon-wrapper cyan" style={{ overflow: 'hidden', padding: 0, border: 'none' }}>
+                <img src="/images/Solutions.jpg" alt="PrimeBridge Solutions logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <h3>PrimeBridge Solutions</h3>
               <p>Modern digital and IT solutions, from web development and business email setups to social media marketing and branding.</p>
@@ -107,8 +107,8 @@ const Holdings = () => {
             </div>
 
             <div className="card sub-card">
-              <div className="sub-icon-wrapper green">
-                <Building2 size={28} />
+              <div className="sub-icon-wrapper green" style={{ overflow: 'hidden', padding: 0, border: 'none' }}>
+                <img src="/images/Talent.jpg" alt="PrimeBridge Talent Management logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <h3>PrimeBridge Talent Management</h3>
               <p>End-to-end recruitment, payroll management, human resources outsourcing, and professional staff placements.</p>

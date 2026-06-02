@@ -15,6 +15,71 @@ const DOODLE_MAP = {
   'talent-management':  talentDoodle,
 };
 
+const DoodleArtwork = ({ companyId, variant = 'detail' }) => {
+  const title = `${companyId}-${variant}-doodles`;
+
+  if (companyId === 'solutions') {
+    return (
+      <div className={`service-doodle-art service-doodle-art--${variant} service-doodle-art--solutions`} aria-hidden="true">
+        <svg viewBox="0 0 360 360" role="img" aria-labelledby={title}>
+          <title id={title}>Decorative technology doodles</title>
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="54" y="70" width="132" height="88" rx="12" stroke="#0f4c81" strokeWidth="7" />
+            <path d="M92 184h56M118 158v26" stroke="#00b4d8" strokeWidth="7" />
+            <path d="M76 100h42M76 124h78" stroke="#ffc107" strokeWidth="6" />
+            <rect x="214" y="112" width="76" height="132" rx="16" stroke="#00b4d8" strokeWidth="7" />
+            <path d="M236 136h30M238 216h28" stroke="#0f4c81" strokeWidth="6" />
+            <path d="M82 246c34-32 74-32 120 0s82 30 108-8" stroke="#ff6b6b" strokeWidth="7" />
+            <path d="M245 68l15 15 25-30M50 220l22-16 20 22" stroke="#2ec4b6" strokeWidth="7" />
+            <circle cx="308" cy="88" r="11" fill="#ffc107" stroke="none" />
+            <circle cx="70" cy="286" r="9" fill="#00b4d8" stroke="none" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (companyId === 'talent-management') {
+    return (
+      <div className={`service-doodle-art service-doodle-art--${variant} service-doodle-art--talent`} aria-hidden="true">
+        <svg viewBox="0 0 360 360" role="img" aria-labelledby={title}>
+          <title id={title}>Decorative people and hiring doodles</title>
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="106" cy="100" r="28" stroke="#0f4c81" strokeWidth="7" />
+            <path d="M62 182c9-36 77-36 88 0" stroke="#00b4d8" strokeWidth="7" />
+            <circle cx="234" cy="92" r="24" stroke="#ff6b6b" strokeWidth="7" />
+            <path d="M196 166c8-30 68-30 76 0" stroke="#ffc107" strokeWidth="7" />
+            <rect x="82" y="220" width="196" height="66" rx="14" stroke="#0f4c81" strokeWidth="7" />
+            <path d="M126 220v-22h108v22M126 254h46M204 254h34" stroke="#2ec4b6" strokeWidth="7" />
+            <path d="M284 92c26 16 35 45 18 70M64 96c-24 18-32 48-12 72" stroke="#00b4d8" strokeWidth="6" />
+            <circle cx="306" cy="220" r="10" fill="#ffc107" stroke="none" />
+            <circle cx="56" cy="244" r="9" fill="#ff6b6b" stroke="none" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`service-doodle-art service-doodle-art--${variant} service-doodle-art--corporate`} aria-hidden="true">
+      <svg viewBox="0 0 360 360" role="img" aria-labelledby={title}>
+        <title id={title}>Decorative finance doodles</title>
+        <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="58" y="70" width="112" height="150" rx="14" stroke="#0f4c81" strokeWidth="7" />
+          <path d="M84 104h58M84 136h58M84 168h26M126 168h16" stroke="#00b4d8" strokeWidth="6" />
+          <path d="M214 230V126M258 230V92M302 230v-70" stroke="#0f4c81" strokeWidth="8" />
+          <path d="M202 230h112" stroke="#ffc107" strokeWidth="7" />
+          <path d="M204 152l52-54 48 42" stroke="#2ec4b6" strokeWidth="7" />
+          <path d="M246 64l20 20 34-42" stroke="#ff6b6b" strokeWidth="7" />
+          <circle cx="104" cy="266" r="24" stroke="#ffc107" strokeWidth="7" />
+          <path d="M104 250v32M90 266h28" stroke="#0f4c81" strokeWidth="6" />
+          <circle cx="310" cy="282" r="9" fill="#00b4d8" stroke="none" />
+        </g>
+      </svg>
+    </div>
+  );
+};
+
 // ─── Pricing Block Components ────────────────────────────────────────────────
 
 const StartingFromBlock = ({ service }) => (
@@ -245,7 +310,7 @@ const ServiceDetail = () => {
           <div className="service-header-title-row">
             <div className="service-company-logo-wrap">
               <img
-                src="/images/prime.jpg"
+                src={company.logo || "/images/prime.jpg"}
                 alt={`${company.name} logo`}
                 className="service-company-logo"
               />
@@ -267,6 +332,9 @@ const ServiceDetail = () => {
             aria-hidden="true"
           />
         )}
+        <DoodleArtwork companyId={companyId} variant="detail-left" />
+        <DoodleArtwork companyId={companyId} variant="detail-right" />
+        <DoodleArtwork companyId={companyId} variant="detail-bottom" />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           {isWideLayout ? (

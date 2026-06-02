@@ -139,8 +139,8 @@ const About = () => {
             <p>The vision and leadership behind Primebridge Group.</p>
           </div>
           <div className="ceo-card">
-            <div className="ceo-avatar">
-              <span className="ceo-initials">SF</span>
+            <div className="ceo-avatar" style={{ overflow: 'hidden' }}>
+              <img src="/images/shaun.jpeg" alt="Shaun Fernando" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div className="ceo-content">
               <h3 className="ceo-name">Shaun Fernando</h3>

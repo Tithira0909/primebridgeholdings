@@ -3,9 +3,9 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
+  host: (process.env.DB_HOST || 'localhost').trim(),
   port: parseInt(process.env.DB_PORT || '3306', 10),
-  user: process.env.DB_USER || 'root',
+  user: (process.env.DB_USER || 'root').trim(),
   password: process.env.DB_PASSWORD || '',
 };
 
@@ -13,26 +13,29 @@ let pool = null;
 
 // 1. First, create database if not exists
 const connection = mysql.createConnection(dbConfig);
+const dbName = (process.env.DB_NAME || 'primebridge').trim();
+
 connection.on('error', (err) => {
   console.error('Database connection error:', err.message);
 });
-connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME || 'primebridge'}\``, (err) => {
+connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
   if (err) {
-    console.error('Failed to auto-create database:', err.message);
+    console.error('Failed to auto-create database (ignoring for shared hosting):', err.message);
   } else {
-    console.log(`Database '${process.env.DB_NAME || 'primebridge'}' verified/created successfully.`);
-    // 2. Initialize the main connection pool AFTER the database exists
-    initializePool();
-    // 3. Initialize schema and seed data sequentially
-    initializeDatabase();
+    console.log(`Database '${dbName}' verified/created successfully.`);
   }
+  
+  // ALWAYS initialize pool and database, even if CREATE DATABASE fails.
+  // In cPanel shared hosting, the DB is pre-created and users lack CREATE privileges.
+  initializePool();
+  initializeDatabase();
   connection.end();
 });
 
 function initializePool() {
   pool = mysql.createPool({
     ...dbConfig,
-    database: process.env.DB_NAME || 'primebridge',
+    database: (process.env.DB_NAME || 'primebridge').trim(),
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -282,10 +285,16 @@ function initializeDatabase() {
   db.run(`
     CREATE TABLE IF NOT EXISTS admins (
       username TEXT PRIMARY KEY,
-      password TEXT NOT NULL
+      password TEXT NOT NULL,
+      totp_secret TEXT,
+      totp_enabled INTEGER DEFAULT 0
     )
   `, [], (err) => {
     if (err) return console.error('Error creating admins table:', err.message);
+    
+    // Add columns if table already existed (ignore errors if columns exist)
+    db.run("ALTER TABLE admins ADD COLUMN totp_secret VARCHAR(255)", [], () => {});
+    db.run("ALTER TABLE admins ADD COLUMN totp_enabled BOOLEAN DEFAULT FALSE", [], () => {});
     
     // Seed default admin if not exists
     db.get("SELECT * FROM admins WHERE username = 'admin'", [], (err, row) => {

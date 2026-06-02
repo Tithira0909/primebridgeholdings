@@ -63,6 +63,7 @@ h3 { font-size: 1.8rem; font-weight: 600; }
 
 p {
   margin-bottom: 1rem;
+  text-align: justify;
 }
 
 a {

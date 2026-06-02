@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import { BlogProvider } from './context/BlogContext';
 import { ServicesProvider } from './context/ServicesContext';
 import { HeroProvider } from './context/HeroContext';
+import { SocialProvider } from './context/SocialContext';
 
 // Layouts
 import PublicLayout from './layouts/PublicLayout';
@@ -36,6 +37,7 @@ import AdminServices from './pages/admin/AdminServices';
 import AdminHero from './pages/admin/AdminHero';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminTransactions from './pages/admin/AdminTransactions';
+import AdminSocials from './pages/admin/AdminSocials';
 
 
 // Scroll to top on route change
@@ -70,10 +72,11 @@ function App() {
 
   return (
     <AuthProvider>
-      <ServicesProvider>
-        <BlogProvider>
-          <HeroProvider>
-            <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+      <SocialProvider>
+        <ServicesProvider>
+          <BlogProvider>
+            <HeroProvider>
+              <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
               <Router>
                 <ScrollToTop />
                 {loading && (
@@ -111,6 +114,7 @@ function App() {
                     <Route path="services" element={<AdminServices />} />
                     <Route path="hero" element={<AdminHero />} />
                     <Route path="transactions" element={<AdminTransactions />} />
+                    <Route path="settings" element={<AdminSocials />} />
                   </Route>
                 </Routes>
               </Router>
@@ -118,6 +122,7 @@ function App() {
           </HeroProvider>
         </BlogProvider>
       </ServicesProvider>
+      </SocialProvider>
     </AuthProvider>
   );
 }

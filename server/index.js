@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const speakeasy = require('speakeasy');
+const QRCode = require('qrcode');
 const db = require('./db');
 
 const app = express();
@@ -10,14 +12,85 @@ app.use(express.json());
 
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
 app.post('/api/auth/login', (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, totpToken } = req.body;
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required' });
   }
   db.get('SELECT * FROM admins WHERE username = ? AND password = ?', [username, password], (err, row) => {
     if (err) return res.status(500).json({ error: 'Database error' });
     if (!row) return res.status(401).json({ error: 'Invalid credentials' });
-    res.json({ success: true, username: row.username });
+    
+    // Check if 2FA is enabled
+    if (row.totp_enabled) {
+      if (!totpToken) {
+        // Return require2FA flag so frontend can prompt for token
+        return res.json({ require2FA: true, username: row.username });
+      } else {
+        // Verify token
+        const verified = speakeasy.totp.verify({
+          secret: row.totp_secret,
+          encoding: 'base32',
+          token: totpToken,
+          window: 1 // allows 30 seconds drift before/after
+        });
+        
+        if (!verified) {
+          return res.status(401).json({ error: 'Invalid 2FA code' });
+        }
+      }
+    } else {
+      // 2FA not enabled, inform frontend it needs to be set up
+      if (!totpToken) {
+        return res.json({ requireSetup2FA: true, username: row.username });
+      }
+    }
+    
+    res.json({ success: true, username: row.username, token: 'fake-jwt-token' });
+  });
+});
+
+app.post('/api/auth/setup-2fa', (req, res) => {
+  const { username } = req.body;
+  if (!username) return res.status(400).json({ error: 'Username is required' });
+  
+  const secret = speakeasy.generateSecret({
+    name: `PrimeBridgeHoldings (${username})`
+  });
+  
+  // Save temporary secret to DB (not enabled yet)
+  db.run('UPDATE admins SET totp_secret = ? WHERE username = ?', [secret.base32, username], (err) => {
+    if (err) return res.status(500).json({ error: 'Database error' });
+    
+    QRCode.toDataURL(secret.otpauth_url, (err, data_url) => {
+      if (err) return res.status(500).json({ error: 'Error generating QR code' });
+      res.json({ qrCodeUrl: data_url, secret: secret.base32 });
+    });
+  });
+});
+
+app.post('/api/auth/verify-2fa', (req, res) => {
+  const { username, totpToken } = req.body;
+  if (!username || !totpToken) return res.status(400).json({ error: 'Username and token required' });
+  
+  db.get('SELECT * FROM admins WHERE username = ?', [username], (err, row) => {
+    if (err) return res.status(500).json({ error: 'Database error' });
+    if (!row || !row.totp_secret) return res.status(400).json({ error: '2FA setup not initiated' });
+    
+    const verified = speakeasy.totp.verify({
+      secret: row.totp_secret,
+      encoding: 'base32',
+      token: totpToken,
+      window: 1
+    });
+    
+    if (verified) {
+      db.run('UPDATE admins SET totp_enabled = 1 WHERE username = ?', [username], (err) => {
+        if (err) return res.status(500).json({ error: 'Database error' });
+        res.json({ success: true, token: 'fake-jwt-token' });
+      });
+    } else {
+      res.status(401).json({ error: 'Invalid verification code' });
+    }
   });
 });
 

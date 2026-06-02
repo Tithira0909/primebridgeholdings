@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server/index.cjs",
+    "start": "node server/index.cjs"
   },
   "dependencies": {
     "@blocknote/core": "^0.51.3",
@@ -25,9 +27,11 @@
     "mysql2": "^3.22.4",
     "node-fetch": "^3.3.2",
     "nodemailer": "^8.0.10",
+    "qrcode": "^1.5.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.15.0",
+    "speakeasy": "^2.0.0",
     "sqlite3": "^6.0.1"
   },
   "devDependencies": {

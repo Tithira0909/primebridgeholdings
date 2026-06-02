@@ -50,6 +50,17 @@ const iconMap = {
   'talent-management': Users,
 };
 
+const serviceCardStyles = [
+  'aqua-lines',
+  'sunny-dots',
+  'coral-waves',
+  'mint-grid',
+  'violet-rings',
+  'amber-sparks',
+  'sky-circuits',
+  'rose-crosshatch',
+];
+
 const Services = () => {
   const { hash } = useLocation();
   const { servicesData } = useServices();
@@ -92,13 +103,22 @@ const Services = () => {
             <section
               id={company.id}
               key={company.id}
-              className={`company-section ${
+              className={`company-section company-section--${company.id} ${
                 index !== visibleCompanies.length - 1 ? 'has-divider' : ''
               }`}
             >
+              <div className="company-section-doodles" aria-hidden="true">
+                <span className="company-doodle company-doodle--one" />
+                <span className="company-doodle company-doodle--two" />
+                <span className="company-doodle company-doodle--three" />
+              </div>
               <div className="company-header">
                 <div className="company-icon-large">
-                  <Icon size={40} />
+                  {company.logo ? (
+                    <img src={company.logo} alt={`${company.name} logo`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
+                  ) : (
+                    <Icon size={40} />
+                  )}
                 </div>
                 <div>
                   <h2>{company.name}</h2>
@@ -107,13 +127,14 @@ const Services = () => {
               </div>
 
               <div className="grid grid-3 services-grid">
-                {company.services.map((service) => {
+                {company.services.map((service, serviceIndex) => {
                   const badge = getPriceBadge(service);
+                  const styleIndex = (index * 3 + serviceIndex) % serviceCardStyles.length;
                   return (
                     <Link
                       to={`/services/${company.id}/${service.id}`}
                       key={service.id}
-                      className="service-card"
+                      className={`service-card service-card--${serviceCardStyles[styleIndex]}`}
                     >
                       <h4>{service.name}</h4>
                       <p>{service.desc}</p>

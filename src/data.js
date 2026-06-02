@@ -12,6 +12,7 @@ export const servicesData = [
     name: "PrimeBridge Corporate Services (Pvt) Ltd",
     description: "A professional financial and corporate advisory arm delivering comprehensive business support services. Ensures full financial compliance and operational efficiency for businesses.",
     icon: "Briefcase",
+    logo: "/images/Corporate.jpg",
     services: [
       {
         id: "accounting",
@@ -167,6 +168,7 @@ export const servicesData = [
     description:
       "A technology and digital services company helping businesses establish and grow their digital presence. Empowers businesses with modern digital tools and strategies.",
     icon: "MonitorPlay",
+    logo: "/images/Solutions.jpg",
     services: [
       {
         id: "social-media",
@@ -300,6 +302,7 @@ export const servicesData = [
     description:
       "A human resource solutions provider focused on building and managing high-performing teams. Delivers efficient and scalable workforce solutions.",
     icon: "Users",
+    logo: "/images/Talent.jpg",
     services: [
       {
         id: "hr-outsourcing",
